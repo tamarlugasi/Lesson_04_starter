@@ -5,6 +5,7 @@ import pytest
 
 import selection_core
 
+from baseline.tasks import first_missing
 
 
 @pytest.mark.req("REQ-SEL-01")
@@ -54,3 +55,9 @@ def test_only_the_events_client_may_select(sample_event):
     with pytest.raises(selection_core.SelectionError) as err:
         selection_core.submit_selection(sample_event, "cli_200", ["med_1"], ["add_to_album"])
     assert err.value.code == "FORBIDDEN"    
+
+@pytest.mark.req("BASELINE-04")
+def test_first_missing_returns_first_required_item_not_present():
+    assert first_missing(["a", "b", "c"], ["a", "c"]) == "b"
+    assert first_missing(["a", "b", "c"], ["c"]) == "a"
+    assert first_missing(["a", "b"], ["a", "b"]) is None

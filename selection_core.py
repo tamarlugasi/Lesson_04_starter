@@ -7,13 +7,13 @@ Requirements: REQ-SEL-01 .. REQ-SEL-06 (see the lesson handout).
 KNOWN_SERVICES = ("add_to_album", "print_10x15")
 
 
+
 class SelectionError(Exception):
     """A selection was rejected. `code` says which rule rejected it."""
 
     def __init__(self, code: str):
         super().__init__(code)
         self.code = code
-
 
 def available_services(event: dict) -> list[str]:
     """Known services that are enabled for this event, in catalog order."""
